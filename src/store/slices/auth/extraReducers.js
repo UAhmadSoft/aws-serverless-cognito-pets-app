@@ -108,7 +108,7 @@ export const signUp = createAsyncThunk(
 
     // attrList.push(new CognitoUserAttribute(usernameAttribute));
     attrList.push(new CognitoUserAttribute(emailAttribute));
-    attrList.push(new CognitoUserAttribute(ageAttribute));
+    // attrList.push(new CognitoUserAttribute(ageAttribute));
     attrList.push(new CognitoUserAttribute(nameAttribute));
     attrList.push(new CognitoUserAttribute(pictureAttribute));
     attrList.push(new CognitoUserAttribute(genderAttribute));
