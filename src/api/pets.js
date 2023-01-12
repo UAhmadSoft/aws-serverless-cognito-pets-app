@@ -4,41 +4,14 @@ import { toast } from 'react-toastify';
 
 const SECURE_API = getSECURE_API();
 SECURE_API.interceptors.request.use((req) => {
-  req.baseURL = `${req.baseURL}/users`;
+  req.baseURL = `${req.baseURL}/pets`;
   return req;
 });
 
-// API.interceptors.request.use((req) => {
-//   req.baseURL = `${req.baseURL}/users`;
-//   return req;
-// });
+export const getAllPets = (values) => SECURE_API.get('');
+export const deletePet = (id) => SECURE_API.delete(`/${id}`);
 
-export const getMe = () => SECURE_API.get('/me');
-export const getMyNotifications = () => SECURE_API.get('/notifications');
-export const updateMe = (newProfile) =>
-  SECURE_API.patch('/me', {
-    ...newProfile,
-  });
-export const updatePassword = (body) =>
-  axios.patch(
-    `${baseURL}/auth/update-password`,
-    {
-      ...body,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    }
-  );
-
-export const getAllUsers = (values) => SECURE_API.get('');
-export const deleteUser = (id) => SECURE_API.delete(`/${id}`);
-
-export const logIn = (values) => API.post('/auth/login', values);
-export const signUp = (values) => API.post('/auth/signup', values);
-
-export const createUser = (user) => {
+export const createPet = (user) => {
   let formData = new FormData();
 
   for (const [key, value] of Object.entries(user)) {
@@ -47,7 +20,7 @@ export const createUser = (user) => {
 
   console.log('formData', formData);
 
-  return fetch(`${baseURL}/users`, {
+  return fetch(`${baseURL}/pets`, {
     body: formData,
     method: 'POST',
     headers: {
@@ -62,7 +35,7 @@ export const createUser = (user) => {
     // callBack?.();
   });
 };
-export const updateUser = (id, user) => {
+export const updatePet = (id, user) => {
   let formData = new FormData();
 
   for (const [key, value] of Object.entries(user)) {
@@ -73,7 +46,7 @@ export const updateUser = (id, user) => {
 
   console.log('formData', formData);
 
-  return fetch(`${baseURL}/users/${id}`, {
+  return fetch(`${baseURL}/pets/${id}`, {
     body: formData,
     method: 'PATCH',
     headers: {

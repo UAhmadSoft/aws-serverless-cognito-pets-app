@@ -46,7 +46,7 @@ import { compose } from 'redux';
 import SendEmail from 'dialogs/sendEmail';
 import { RestartAlt } from '@mui/icons-material';
 import editIcon from '@iconify/icons-eva/edit-fill';
-import { deleteUser } from 'store/slices/users/extraReducers';
+import { deletePet } from 'store/slices/pets/extraReducers';
 
 // ----------------------------------------------------------------------
 
@@ -113,7 +113,7 @@ function User({ filter }) {
     e.stopPropagation();
     const { id } = e.currentTarget.dataset;
 
-    dispatch(deleteUser(id));
+    dispatch(deletePet(id));
   };
 
   const clearSearch = () => {
@@ -121,7 +121,7 @@ function User({ filter }) {
   };
 
   const handleDeleteUser = () => {
-    dispatch(deleteUser(currentDeleteId));
+    dispatch(deletePet(currentDeleteId));
     toggleDeleteOpen();
   };
 

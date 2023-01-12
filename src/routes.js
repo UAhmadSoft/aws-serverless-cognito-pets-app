@@ -11,9 +11,7 @@ import NewUser from 'pages/NewUser';
 import DashboardLayout from 'components/dashboard';
 import DashboardApp from 'components/dashboard/DashboardApp';
 import { logout } from 'store/slices/auth';
-import { getAllUsers } from 'store/slices/users/extraReducers';
-import Backtests from 'pages/Backtests';
-import { getAllBackTests } from 'store/slices/backtests/extraReducers';
+import { getAllPets } from 'store/slices/pets/extraReducers';
 import ConfirmMail from 'pages/ConfirmMail';
 
 const Logout = () => {
@@ -25,16 +23,12 @@ const Logout = () => {
 const Router = () => {
   const { authenticating, isLoggedIn, user } = useSelector((st) => st.auth);
 
-  const { users, fetching } = useSelector((st) => st.users);
+  const { pets, fetching } = useSelector((st) => st.pets);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (fetching) dispatch(getAllUsers());
-  }, [fetching, users]);
-
-  useEffect(() => {
-    dispatch(getAllBackTests());
-  }, []);
+    if (fetching) dispatch(getAllPets());
+  }, [fetching, pets]);
 
   if (authenticating) return <Loader />;
   return (
@@ -43,10 +37,9 @@ const Router = () => {
         <Routes>
           <Route path='/dashboard' element={<DashboardLayout />}>
             <Route path='app' element={<DashboardApp />} />
-            <Route path='users' element={<User />} />
-            <Route path='backtests' element={<Backtests />} />
-            <Route path='users/new' element={<NewUser />} />
-            <Route path='users/:id' element={<UpdateUser />} />
+            <Route path='pets' element={<User />} />
+            <Route path='pets/new' element={<NewUser />} />
+            <Route path='pets/:id' element={<UpdateUser />} />
             <Route path='*' element={<Navigate to='/dashboard/app' />} />
           </Route>
           <Route path='/logout' element={<Logout />} />

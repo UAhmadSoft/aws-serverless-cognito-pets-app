@@ -4,6 +4,8 @@ import peopleFill from '@iconify/icons-eva/people-fill';
 import listFill from '@iconify/icons-eva/file-text-fill';
 import logoutFill from '@iconify/icons-eva/log-out-fill';
 import personFill from '@iconify/icons-eva/person-fill';
+import { Pets } from '@mui/icons-material';
+
 // import bannersFill from '@iconify/icons-eva/camera-fill';
 // ----------------------------------------------------------------------
 
@@ -15,11 +17,7 @@ export const adminConfig = [
     path: '/dashboard/app',
     icon: getIcon(pieChart2Fill),
   },
-  {
-    title: 'Backtests',
-    path: '/dashboard/backtests',
-    icon: getIcon(listFill),
-  },
+
   {
     title: 'Orders',
     path: '/dashboard/orders',
@@ -42,15 +40,11 @@ export const userConfig = [
     path: '/dashboard/app',
     icon: getIcon(pieChart2Fill),
   },
+
   {
-    title: 'Backtests',
-    path: '/dashboard/backtests',
-    icon: getIcon(listFill),
-  },
-  {
-    title: 'Users',
-    path: '/dashboard/users',
-    icon: getIcon(peopleFill),
+    title: 'Pets',
+    path: '/dashboard/pets',
+    icon: <Pets />,
   },
   {
     title: 'Logout',

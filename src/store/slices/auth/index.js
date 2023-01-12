@@ -1,14 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import {
-  getMe,
-  login,
-  updateMe,
-  signUp,
-  updatePassword,
-  getMyNotifications,
-  confirmMail,
-} from './extraReducers';
+import { getMe, login, signUp, confirmMail } from './extraReducers';
 
 import {
   CognitoUserPool,
@@ -75,9 +67,6 @@ const authSlice = createSlice({
     [getMe.rejected]: (state, { payload }) => {
       state.authenticating = false;
     },
-    [getMyNotifications.fulfilled]: (state, { payload }) => {
-      state.notifications = payload.notifications;
-    },
 
     [login.pending]: (state, { payload }) => {
       state.loading = true;
@@ -132,24 +121,6 @@ const authSlice = createSlice({
       toast.error(payload.message);
       state.loading = false;
     },
-
-    [updateMe.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
-    [updateMe.fulfilled]: (state, { payload }) => ({
-      ...state,
-      user: payload.user,
-      isLoggedIn: true,
-    }),
-    [updatePassword.pending]: (state, { payload }) => {
-      state.loading = true;
-    },
-    [updatePassword.fulfilled]: (state, { payload }) => ({
-      ...state,
-      user: payload.user,
-      isLoggedIn: true,
-      notifications: [],
-    }),
   },
 });
 

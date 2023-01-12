@@ -7,7 +7,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import UserForm from 'components/UserForm';
 import { compose } from 'redux';
-import { updateUser } from 'store/slices/users/extraReducers';
+import { updatePet } from 'store/slices/pets/extraReducers';
 
 const UpdateUser = () => {
   const { users, loading } = useSelector((st) => st.users);
@@ -27,7 +27,7 @@ const UpdateUser = () => {
 
   const handleSubmit = async (values, resetForm) => {
     console.log('values1', values);
-    dispatch(updateUser({ updatedUser: { ...values }, id })).then(({ err }) => {
+    dispatch(updatePet({ updatedUser: { ...values }, id })).then(({ err }) => {
       if (!err) navigate('/dashboard/users');
     });
   };
