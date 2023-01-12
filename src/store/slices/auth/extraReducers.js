@@ -2,17 +2,33 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as userApi from 'api/users';
 import { toast } from 'react-toastify';
 
-import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import {
+  AuthenticationDetails,
+  CognitoUser,
+  CognitoUserAttribute,
+} from 'amazon-cognito-identity-js';
 
 export const getMe = createAsyncThunk(
   '/auth/getMe',
-  async (_, { rejectWithValue }) => {
-    return userApi
-      .getMe()
-      .then((res) => ({ token: res.data.token, user: res.data.user }))
-      .catch((err) => {
-        return rejectWithValue(err);
+  async (userPool, { rejectWithValue }) => {
+    const user = userPool.getCurrentUser();
+    console.log('user', user);
+
+    return new Promise((resolve, reject) => {
+      user.getSession((err, session) => {
+        console.log('session', session);
+        console.log('err', err);
+        if (err) {
+          return reject(rejectWithValue(err));
+        } else {
+          if (session.isValid()) {
+            return resolve(session);
+          } else {
+            return reject('Session Expired');
+          }
+        }
       });
+    });
   }
 );
 
@@ -54,14 +70,30 @@ export const updateMe = createAsyncThunk(
 
 export const login = createAsyncThunk(
   '/auth/login',
-  async (values, { rejectWithValue }) => {
-    return userApi
-      .logIn(values)
-      .then((res) => ({ token: res.data.token, user: res.data.user }))
-      .catch((err) => {
-        toast.error(err);
-        return rejectWithValue(err);
+  async ({ username, password, userPool }, { rejectWithValue }) => {
+    console.log('started');
+    const authData = {
+      Username: username,
+      Password: password,
+    };
+    const authDetails = new AuthenticationDetails(authData);
+    const userData = {
+      Username: username,
+      Pool: userPool,
+    };
+    const cognitoUser = new CognitoUser(userData);
+    return new Promise((resolve, reject) => {
+      cognitoUser.authenticateUser(authDetails, {
+        onSuccess(result) {
+          console.log(result);
+          return resolve(result);
+        },
+        onFailure(err) {
+          console.log(err);
+          return reject(rejectWithValue(err));
+        },
       });
+    });
   }
 );
 
@@ -129,6 +161,29 @@ export const signUp = createAsyncThunk(
           return resolve({ user: result.user });
         }
       );
+    });
+  }
+);
+
+export const confirmMail = createAsyncThunk(
+  '/auth/confirmMail',
+  async ({ username, userPool, code }, { rejectWithValue }) => {
+    const userData = {
+      Username: username,
+      Pool: userPool,
+    };
+    const cognitUser = new CognitoUser(userData);
+
+    return new Promise((resolve, reject) => {
+      cognitUser.confirmRegistration(code, true, (err, result) => {
+        if (err) {
+          return reject(rejectWithValue(err));
+        }
+
+        console.log('result', result);
+
+        return resolve({ user: result.user });
+      });
     });
   }
 );

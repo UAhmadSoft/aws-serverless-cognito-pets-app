@@ -15,12 +15,15 @@ import {
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { signUp } from 'store/slices/auth/extraReducers';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
 export default function SignupForm() {
   const dispatch = useDispatch();
   const { loading, userPool } = useSelector((st) => st.auth);
+
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const SignupSchema = Yup.object().shape({
@@ -61,7 +64,11 @@ export default function SignupForm() {
           userPool,
         })
       ).then(({ error }) => {
-        if (!error) formik.resetForm();
+        if (!error) {
+          formik.resetForm();
+
+          navigate('/confirm-mail');
+        }
       });
     },
   });

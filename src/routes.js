@@ -14,6 +14,7 @@ import { logout } from 'store/slices/auth';
 import { getAllUsers } from 'store/slices/users/extraReducers';
 import Backtests from 'pages/Backtests';
 import { getAllBackTests } from 'store/slices/backtests/extraReducers';
+import ConfirmMail from 'pages/ConfirmMail';
 
 const Logout = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ const Router = () => {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/confirm-mail' element={<ConfirmMail />} />
           <Route path='*' element={<Navigate to='/login' />} />
         </Routes>
       )}

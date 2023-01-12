@@ -14,19 +14,25 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMyNotifications, login } from 'store/slices/auth/extraReducers';
-import { toast } from 'react-toastify';
+import { confirmMail } from 'store/slices/auth/extraReducers';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+export default function ConfirmMail() {
   const dispatch = useDispatch();
   const { loading, userPool } = useSelector((st) => st.auth);
 
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
-  const LoginSchema = Yup.object().shape({
-    username: Yup.string().required('Username is required'),
-    password: Yup.string().required('Password is required'),
+  const SignupSchema = Yup.object().shape({
+    username: Yup.string().required('UserName is Required'),
+    code: Yup.string()
+      .matches(/^\d{6}$/, 'Code should be 6 digits')
+      .required('Code is required'),
+
+    // code must be 6 digits
   });
 
   useEffect(() => {
@@ -35,23 +41,22 @@ export default function LoginForm() {
 
   const formik = useFormik({
     initialValues: {
-      username: '',
-      password: '',
+      code: '',
     },
-    validationSchema: LoginSchema,
+    validationSchema: SignupSchema,
     onSubmit: () => {
-      console.log(`'formik.values'`, formik.values);
+      // console.log(`'formik.va'`, formik.values);
 
       dispatch(
-        login({
+        confirmMail({
+          code: formik.values.code,
           username: formik.values.username,
-          password: formik.values.password,
           userPool,
         })
       ).then(({ error }) => {
         if (!error) {
           formik.resetForm();
-          toast.success('Login Successful');
+          navigate('/login');
         }
       });
     },
@@ -60,45 +65,23 @@ export default function LoginForm() {
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
     formik;
 
-  const handleShowPassword = () => {
-    setShowPassword((show) => !show);
-  };
-
-  useEffect(() => {
-    console.log('formik.errors', formik.errors);
-  }, [formik.errors]);
-
   return (
     <FormikProvider value={formik}>
       <Form autoComplete='off' noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
             fullWidth
-            autoComplete='username'
-            type='username'
             label='Username'
             {...getFieldProps('username')}
             error={Boolean(touched.username && errors.username)}
             helperText={touched.username && errors.username}
           />
-
           <TextField
             fullWidth
-            autoComplete='current-password'
-            type={showPassword ? 'text' : 'password'}
-            label='Password'
-            {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <IconButton onClick={handleShowPassword} edge='end'>
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
+            label='Code'
+            {...getFieldProps('code')}
+            error={Boolean(touched.code && errors.code)}
+            helperText={touched.code && errors.code}
           />
         </Stack>
 
@@ -110,7 +93,7 @@ export default function LoginForm() {
           variant='contained'
           loading={isSubmitting}
         >
-          Login
+          Confirm Mail
         </LoadingButton>
       </Form>
     </FormikProvider>

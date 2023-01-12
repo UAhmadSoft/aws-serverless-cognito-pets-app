@@ -6,8 +6,7 @@ import { Card, Stack, Link, Container, Typography } from '@mui/material';
 // components
 import Page from 'components/Page';
 import { MHidden } from 'components/@material-extend';
-import { LoginForm } from 'components/authentication/login';
-import AuthSocial from 'components/auth/AuthSocial';
+import { ConfirmMail } from 'components/authentication/confirmMail';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -37,13 +36,13 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function ConfirmMailPage() {
   return (
-    <RootStyle title='Login'>
+    <RootStyle title='ConfirmMail'>
       <MHidden width='mdDown'>
         <SectionStyle>
           <Typography variant='h3' sx={{ px: 5, mt: 10, mb: 5 }}>
-            Hi, Welcome Back
+            Confirm Your Email
           </Typography>
         </SectionStyle>
       </MHidden>
@@ -52,25 +51,19 @@ export default function Login() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant='h4' gutterBottom>
-              Sign in
+              Confirm Your Email
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              Enter your details below.
+              Enter the code sent to your email below.
             </Typography>
           </Stack>
 
-          <LoginForm />
+          <ConfirmMail />
 
           <Typography variant='body2' align='center' sx={{ mt: 3 }}>
-            Confirm your account ?{' '}
-            <Link variant='subtitle2' component={RouterLink} to='/confirm-mail'>
-              Confirm Email
-            </Link>
-          </Typography>
-          <Typography variant='body2' align='center' sx={{ mt: 3 }}>
-            Don’t have an account?&nbsp;
-            <Link variant='subtitle2' component={RouterLink} to='/signup'>
-              Get started
+            Already have an account?&nbsp;
+            <Link variant='subtitle2' component={RouterLink} to='login'>
+              Login
             </Link>
           </Typography>
         </ContentStyle>

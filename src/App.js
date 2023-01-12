@@ -7,15 +7,17 @@ import Router from 'routes';
 import { getMe, getMyNotifications } from 'store/slices/auth/extraReducers';
 
 function App() {
-  const { authenticating, isLoggedIn, user } = useSelector((st) => st.auth);
+  const { userPool } = useSelector((st) => st.auth);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getMe()).then(({ err }) => {
-      if (!err) dispatch(getMyNotifications());
+    if (!userPool) return;
+
+    dispatch(getMe(userPool)).then(({ error }) => {
+      // if (!error) dispatch(getMyNotifications());
     });
-  }, []);
+  }, [userPool]);
 
   return (
     <div className='App'>

@@ -42,7 +42,7 @@ const MENU_OPTIONS = [
 export default function AccountPopover() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const { user } = useSelector((st) => st.auth);
+  const { user, userPool } = useSelector((st) => st.auth);
 
   const dispatch = useDispatch();
 
@@ -54,6 +54,11 @@ export default function AccountPopover() {
   };
 
   const handleLogout = () => {
+    const user = userPool.getCurrentUser();
+    console.log('user', user);
+
+    user?.signOut();
+
     dispatch(logout());
   };
 
