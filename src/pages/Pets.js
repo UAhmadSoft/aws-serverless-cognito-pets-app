@@ -44,7 +44,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { compose } from 'redux';
 import SendEmail from 'dialogs/sendEmail';
-import { RestartAlt } from '@mui/icons-material';
+import { Edit, RestartAlt } from '@mui/icons-material';
 import editIcon from '@iconify/icons-eva/edit-fill';
 import { deletePet } from 'store/slices/pets/extraReducers';
 
@@ -246,10 +246,10 @@ function Pet({ filter }) {
                       )
                       .map((row) => {
                         // console.log('row', row);
-                        const { _id, name, age, city } = row;
+                        const { id, name, age, city } = row;
 
                         return (
-                          <TableRow key={_id} tabIndex={-1} role='checkbox'>
+                          <TableRow key={id} tabIndex={-1} role='checkbox'>
                             <TableCell padding='checkbox'></TableCell>
                             <TableCell
                               component='th'
@@ -284,8 +284,12 @@ function Pet({ filter }) {
                             <TableCell align='left'>{city}</TableCell>
 
                             <TableCell align='left'>
-                              <IconButton>
-                                <Icon icon={shareIcon} width={24} height={24} />
+                              <IconButton
+                                onClick={() => {
+                                  navigate(`${id}`);
+                                }}
+                              >
+                                <Edit />
                               </IconButton>
                               <IconButton
                                 color='error'

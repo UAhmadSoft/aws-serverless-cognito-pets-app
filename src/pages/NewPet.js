@@ -5,7 +5,7 @@ import { Container } from '@mui/material';
 import Page from '../components/Page';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import UserForm from 'components/UserForm';
+import PetForm from 'components/PetForm';
 import { compose } from 'redux';
 import { createPet } from 'store/slices/pets/extraReducers';
 
@@ -23,7 +23,7 @@ const NewPet = () => {
   return (
     <Page title='New Pet'>
       <Container>
-        <UserForm handleSubmit={handleSubmit} slug='Create' />
+        <PetForm handleSubmit={handleSubmit} slug='Create' />
       </Container>
     </Page>
   );

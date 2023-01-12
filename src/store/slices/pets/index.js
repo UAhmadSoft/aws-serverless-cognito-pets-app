@@ -55,7 +55,7 @@ const petsSlice = createSlice({
       ...state,
       loading: false,
       pets: state.pets.map((el) =>
-        el._id === payload.pet._id ? payload.pet : el
+        el.id === payload.pet.id ? payload.pet : el
       ),
     }),
     [updatePet.rejected]: (state) => {

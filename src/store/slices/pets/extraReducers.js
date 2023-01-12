@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import * as petsApi from 'api/pets';
 import { toast } from 'react-toastify';
 
@@ -19,8 +19,8 @@ export const createPet = createAsyncThunk(
   '/pets/createOne',
   async (values, { rejectWithValue }) => {
     return petsApi
-      .createPet(values)
-      .then((resData) => ({ pet: resData.pet }))
+      .createPet({ ...values, id: nanoid() })
+      .then((res) => ({ pet: res.data.pet }))
       .catch((err) => {
         toast.error(err.message);
         return rejectWithValue(err);
@@ -46,7 +46,7 @@ export const updatePet = createAsyncThunk(
   async ({ id, updatedPet }, { rejectWithValue }) => {
     return petsApi
       .updatePet(id, updatedPet)
-      .then((resData) => ({ pet: resData.pet }))
+      .then((res) => ({ pet: res.data.pet }))
       .catch((err) => {
         toast.error(err.message);
         return rejectWithValue(err);
