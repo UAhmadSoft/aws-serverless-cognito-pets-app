@@ -5,9 +5,9 @@ import Loader from 'components/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
-import User from 'pages/Users';
-import UpdateUser from 'pages/UpdateUser';
-import NewUser from 'pages/NewUser';
+import Pets from 'pages/Pets';
+import UpdateUser from 'pages/UpdatePet';
+import NewUser from 'pages/NewPet';
 import DashboardLayout from 'components/dashboard';
 import DashboardApp from 'components/dashboard/DashboardApp';
 import { logout } from 'store/slices/auth';
@@ -37,7 +37,7 @@ const Router = () => {
         <Routes>
           <Route path='/dashboard' element={<DashboardLayout />}>
             <Route path='app' element={<DashboardApp />} />
-            <Route path='pets' element={<User />} />
+            <Route path='pets' element={<Pets />} />
             <Route path='pets/new' element={<NewUser />} />
             <Route path='pets/:id' element={<UpdateUser />} />
             <Route path='*' element={<Navigate to='/dashboard/app' />} />

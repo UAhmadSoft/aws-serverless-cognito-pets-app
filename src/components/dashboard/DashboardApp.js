@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function DashboardApp() {
   const dispatch = useDispatch();
-  const { users } = useSelector((st) => st.users);
+  const { pets } = useSelector((st) => st.pets);
   // const { reviews } = useSelector((st) => st.reviews);
 
   return (
@@ -20,7 +20,7 @@ export default function DashboardApp() {
         <Box sx={{ pb: 5 }}>
           <Typography variant='h4'>Hi, Welcome back</Typography>
           <Typography variant='h5'>
-            This App is for the management of the documents and users.
+            This App is for the management of the documents and pets.
           </Typography>
         </Box>
         <Grid
@@ -33,20 +33,7 @@ export default function DashboardApp() {
           }}
         >
           <Grid item xs={12} sm={6} md={3}>
-            <AppCard
-              num={users?.length || 0}
-              icon={userIcon}
-              title='Users'
-              color='info'
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppCard
-              num={0}
-              icon={publishedIcon}
-              title='Documents'
-              color='warning'
-            />
+            <AppCard num={pets?.length || 0} title='Pets' color='info' />
           </Grid>
         </Grid>
       </Container>

@@ -9,8 +9,8 @@ import UserForm from 'components/UserForm';
 import { compose } from 'redux';
 import { updatePet } from 'store/slices/pets/extraReducers';
 
-const UpdateUser = () => {
-  const { users, loading } = useSelector((st) => st.users);
+const UpdatePet = () => {
+  const { pets, loading } = useSelector((st) => st.pets);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState();
@@ -19,21 +19,21 @@ const UpdateUser = () => {
   useEffect(() => {
     if (loading) return;
 
-    // console.log('users', users);
-    let tmp = users && users.find((el) => el._id === id);
+    // console.log('pets', pets);
+    let tmp = pets && pets.find((el) => el._id === id);
     // console.log('tmp', tmp);
     setUser(tmp);
-  }, [users, loading]);
+  }, [pets, loading]);
 
   const handleSubmit = async (values, resetForm) => {
     console.log('values1', values);
     dispatch(updatePet({ updatedUser: { ...values }, id })).then(({ err }) => {
-      if (!err) navigate('/dashboard/users');
+      if (!err) navigate('/dashboard/pets');
     });
   };
 
   return (
-    <Page title='Update User'>
+    <Page title='Update Pet'>
       <Container>
         {!loading && user && (
           <UserForm
@@ -48,4 +48,4 @@ const UpdateUser = () => {
   );
 };
 
-export default UpdateUser;
+export default UpdatePet;

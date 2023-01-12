@@ -9,19 +9,19 @@ import UserForm from 'components/UserForm';
 import { compose } from 'redux';
 import { createPet } from 'store/slices/pets/extraReducers';
 
-const NewUser = () => {
-  // const { users } = useSelector((st) => st.users);
+const NewPet = () => {
+  // const { pets } = useSelector((st) => st.pets);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (values, resetForm) => {
     dispatch(createPet({ ...values })).then(({ err }) => {
-      if (!err) navigate('/dashboard/users');
+      if (!err) navigate('/dashboard/pets');
     });
   };
 
   return (
-    <Page title='New User'>
+    <Page title='New Pet'>
       <Container>
         <UserForm handleSubmit={handleSubmit} slug='Create' />
       </Container>
@@ -29,4 +29,4 @@ const NewUser = () => {
   );
 };
 
-export default NewUser;
+export default NewPet;

@@ -16,7 +16,7 @@ const ConfirmDelete = ({
   title = 'Confirm Delete',
   handleSuccess,
 }) => {
-  const { loading } = useSelector((st) => st.users);
+  const { loading } = useSelector((st) => st.pets);
   return (
     <Dialog open={open} onClose={toggleDialog}>
       <DialogTitle>{title}</DialogTitle>
@@ -33,7 +33,8 @@ const ConfirmDelete = ({
           color='success'
           onClick={handleSuccess}
         >
-          Delete {loading && <CircularProgress style={{marginLeft : 10}} size={25} /> }
+          Delete{' '}
+          {loading && <CircularProgress style={{ marginLeft: 10 }} size={25} />}
         </Button>
         <Button variant='contained' color='error' onClick={toggleDialog}>
           Cancel

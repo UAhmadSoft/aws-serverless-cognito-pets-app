@@ -8,7 +8,7 @@ const initialState = {
   pets: [],
 };
 
-const usersSlice = createSlice({
+const petsSlice = createSlice({
   name: 'pets',
   initialState,
   reducers: {
@@ -67,7 +67,7 @@ const usersSlice = createSlice({
     },
     [deletePet.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.pets = state.pets.filter((el) => el._id !== payload.pet._id);
+      state.pets = state.pets.filter((el) => el.id !== payload);
       toast.success('Pet Deleted Successfully!');
     },
     [deletePet.rejected]: (state) => {
@@ -76,4 +76,4 @@ const usersSlice = createSlice({
   },
 });
 
-export default usersSlice;
+export default petsSlice;

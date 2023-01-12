@@ -9,6 +9,7 @@ export const getAllPets = createAsyncThunk(
       .getAllPets()
       .then((res) => ({ pets: res.data.pets }))
       .catch((err) => {
+        console.log('err.message', err.message);
         return rejectWithValue(err);
       });
   }
@@ -32,7 +33,7 @@ export const deletePet = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     return petsApi
       .deletePet(id)
-      .then((res) => ({ pet: res.data.pet }))
+      .then((res) => id)
       .catch((err) => {
         toast.error(err.message);
         return rejectWithValue(err);

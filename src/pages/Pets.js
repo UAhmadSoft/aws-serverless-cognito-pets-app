@@ -32,7 +32,7 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar } from '../components/user';
 //
 import { useToggleInput } from 'hooks/index';
-import UserDetails from './UserDetails';
+import UserDetails from './PetDetails';
 import { Icon } from '@iconify/react';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import shareIcon from '@iconify/icons-eva/share-fill';
@@ -67,8 +67,8 @@ const StyledContainer = styled(Container)({
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
-  { id: 'role', label: 'User Role', alignRight: false },
+  { id: 'age', label: 'age', alignRight: false },
+  { id: 'city', label: 'City', alignRight: false },
   { id: 'actions', label: 'Actions', alignRight: false },
   // { id: 'superior', label: 'Superior', alignRight: false },
   // { id: 'subOrdinates', label: '# Subordinates', alignRight: false },
@@ -76,8 +76,8 @@ const TABLE_HEAD = [
 
 const filterPopoverId = 'UserfilterPopOver';
 
-function User({ filter }) {
-  const { users, fetching } = useSelector((st) => st.users);
+function Pet({ filter }) {
+  const { pets, fetching } = useSelector((st) => st.pets);
   const { user } = useSelector((st) => st.auth);
   const dispatch = useDispatch();
   const [order, setOrder] = useState('asc');
@@ -139,7 +139,7 @@ function User({ filter }) {
 
   useEffect(() => {
     let newUsers = applySortFilter(
-      users,
+      pets,
       getComparator(order, orderBy),
       filterName,
       'name'
@@ -148,7 +148,7 @@ function User({ filter }) {
     // setFilteredUsers(newUsers.filter((el) => el.role === filter));
     setFilteredUsers(newUsers);
     setPage(0);
-  }, [users, fetching, order, orderBy, filterName, getComparator, filter]);
+  }, [pets, fetching, order, orderBy, filterName, getComparator, filter]);
 
   const isUserNotFound = filteredUsers.length === 0;
 
@@ -171,7 +171,7 @@ function User({ filter }) {
   };
 
   return (
-    <Page title='User'>
+    <Page title='Pet'>
       {/* {console.log('filteredUsers', filteredUsers)} */}
       <StyledContainer>
         <Stack
@@ -181,19 +181,17 @@ function User({ filter }) {
           mb={2}
         >
           <Typography variant='h4' gutterBottom>
-            Users
+            Pets
           </Typography>
           <div>
-            {(user.role === 'admin' || user.role === 'userManager') && (
-              <Button
-                component={Link}
-                to='new'
-                variant='contained'
-                startIcon={<Icon icon={plusFill} />}
-              >
-                New User
-              </Button>
-            )}
+            <Button
+              component={Link}
+              to='new'
+              variant='contained'
+              startIcon={<Icon icon={plusFill} />}
+            >
+              New pet
+            </Button>
           </div>
         </Stack>
 
@@ -248,7 +246,7 @@ function User({ filter }) {
                       )
                       .map((row) => {
                         // console.log('row', row);
-                        const { _id, name, role, email } = row;
+                        const { _id, name, age, city } = row;
 
                         return (
                           <TableRow key={_id} tabIndex={-1} role='checkbox'>
@@ -280,42 +278,26 @@ function User({ filter }) {
                             </TableCell>
                             {/* <TableCell align='left'>{sex}</TableCell> */}
                             {/* <TableCell align="left">{role}</TableCell> */}
-                            <TableCell
-                              align='left'
-                              className={classes.hover}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelected(row);
-                                toggleSendEmailOpen();
-                              }}
-                            >
-                              {email}
+                            <TableCell align='left' className={classes.hover}>
+                              {age}
                             </TableCell>
-                            <TableCell align='left'>{role}</TableCell>
+                            <TableCell align='left'>{city}</TableCell>
 
                             <TableCell align='left'>
-                              {user.role === 'admin' && (
-                                <>
-                                  <IconButton>
-                                    <Icon
-                                      icon={shareIcon}
-                                      width={24}
-                                      height={24}
-                                    />
-                                  </IconButton>
-                                  <IconButton
-                                    color='error'
-                                    onClick={handleDeleteButton}
-                                    data-id={row._id}
-                                  >
-                                    <Icon
-                                      icon={trash2Outline}
-                                      width={24}
-                                      height={24}
-                                    />
-                                  </IconButton>
-                                </>
-                              )}
+                              <IconButton>
+                                <Icon icon={shareIcon} width={24} height={24} />
+                              </IconButton>
+                              <IconButton
+                                color='error'
+                                onClick={handleDeleteButton}
+                                data-id={row.id}
+                              >
+                                <Icon
+                                  icon={trash2Outline}
+                                  width={24}
+                                  height={24}
+                                />
+                              </IconButton>
                             </TableCell>
                           </TableRow>
                         );
@@ -341,7 +323,7 @@ function User({ filter }) {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component='div'
-            count={users.length}
+            count={pets.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -357,7 +339,7 @@ function User({ filter }) {
           <ConfirmDelete
             open={isDeleteOpen}
             toggleDialog={toggleDeleteOpen}
-            title='Delete This User'
+            title='Delete This Pet'
             handleSuccess={handleDeleteUser}
           />
           <SendEmail
@@ -371,4 +353,4 @@ function User({ filter }) {
   );
 }
 
-export default User;
+export default Pet;

@@ -6,6 +6,7 @@ import { Card, Typography } from '@mui/material';
 // utils
 import { replace } from 'lodash';
 import numeral from 'numeral';
+import { Pets } from '@mui/icons-material';
 export function fShortenNumber(number) {
   return replace(numeral(number).format('0.00a'), '.00', '');
 }
@@ -44,11 +45,11 @@ const IconWrapperStyle = styled('div')(({ theme, ownerState }) => {
 
 // ----------------------------------------------------------------------
 
-export default function AppItemOrders({ num = 0, title, icon, color }) {
+export default function AppItemOrders({ num = 0, title, PetIcon, color }) {
   return (
     <RootStyle ownerState={{ color }}>
       <IconWrapperStyle ownerState={{ color }}>
-        <Icon icon={icon} width={24} height={24} />
+        <Pets />
       </IconWrapperStyle>
       <Typography variant='h3'>{fShortenNumber(num)}</Typography>
       <Typography variant='subtitle2' sx={{ opacity: 0.72 }}>

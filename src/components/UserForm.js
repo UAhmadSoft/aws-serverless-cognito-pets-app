@@ -58,7 +58,7 @@ const validationSchema = yup.object({
 
 const UserForm = ({ handleSubmit, slug, update, user, fetching }) => {
   const dispatch = useDispatch();
-  const { loading } = useSelector((st) => st.users);
+  const { loading } = useSelector((st) => st.pets);
   const [photo, setPhoto] = useState('');
 
   const navigate = useNavigate();

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const baseURL = 'http://localhost:5000/api';
+export const baseURL =
+  'https://xlx1etp6y3.execute-api.us-east-2.amazonaws.com/dev';
 
 const responseCallback = (res) => {
   if (res.status === 200) return res;
@@ -16,9 +17,11 @@ export const getSECURE_API = () => {
   // To help our auth middleware
   SECURE_API.interceptors.request.use((req) => {
     // console.log('token', token);
-    let token = localStorage.getItem('token');
+    let token = localStorage.getItem(
+      'CognitoIdentityServiceProvider.4uur38vjirmuh86k9654gkob95.umad.ahmad.idToken'
+    );
     if (token) {
-      req.headers.Authorization = `Bearer ${token}`;
+      req.headers.Authorization = token;
     }
     return req;
   });
