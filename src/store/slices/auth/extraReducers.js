@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import {
   AuthenticationDetails,
   CognitoUser,
-  CognitoUserAttribute,
+  CognitoUserAttribute
 } from 'amazon-cognito-identity-js';
 
 export const getMe = createAsyncThunk(
@@ -37,12 +37,12 @@ export const login = createAsyncThunk(
     console.log('started');
     const authData = {
       Username: username,
-      Password: password,
+      Password: password
     };
     const authDetails = new AuthenticationDetails(authData);
     const userData = {
       Username: username,
-      Pool: userPool,
+      Pool: userPool
     };
     const cognitoUser = new CognitoUser(userData);
     return new Promise((resolve, reject) => {
@@ -54,7 +54,7 @@ export const login = createAsyncThunk(
         onFailure(err) {
           console.log(err);
           return reject(rejectWithValue(err));
-        },
+        }
       });
     });
   }
@@ -68,37 +68,37 @@ export const signUp = createAsyncThunk(
       email: data.email,
       password: data.password,
       age: data.age,
-      name: data.name,
+      name: data.name
     };
 
     const attrList = []; // * For Other Attributes
     const emailAttribute = {
       Name: 'email',
-      Value: user.email,
+      Value: user.email
     };
     const usernameAttribute = {
       Name: 'username',
-      Value: user.username,
+      Value: user.username
     };
     const ageAttribute = {
       Name: 'age',
-      Value: `${user.age}`,
+      Value: `${user.age}`
     };
     const nameAttribute = {
       Name: 'name',
-      Value: user.name,
+      Value: user.name
     };
     const pictureAttribute = {
       Name: 'picture',
-      Value: 'https://i.imgur.com/BAzCK7Y.png',
+      Value: 'https://i.imgur.com/BAzCK7Y.png'
     };
     const genderAttribute = {
       Name: 'gender',
-      Value: 'make',
+      Value: 'make'
     };
     const phoneNumberAttribute = {
       Name: 'phone_number',
-      Value: '+923175115069',
+      Value: '+923175115069'
     };
 
     // attrList.push(new CognitoUserAttribute(usernameAttribute));
@@ -133,7 +133,7 @@ export const confirmMail = createAsyncThunk(
   async ({ username, userPool, code }, { rejectWithValue }) => {
     const userData = {
       Username: username,
-      Pool: userPool,
+      Pool: userPool
     };
     const cognitUser = new CognitoUser(userData);
 
